@@ -1,0 +1,96 @@
+from My_language.PifStructure import PifStructure
+from My_language.SymTable import SymTable
+import re
+
+
+class Scanner:
+
+    def __init__(self, program_path: str):
+        self.__symbol_table = SymTable()
+        self.__pif = PifStructure()
+
+        # program text
+        with open(program_path) as file:
+            self.__program_text = file.readlines()
+
+        # program symbols
+        with open("D:\Semester V\FLCD\FLCD_project_compiler\Lab_1b\Tokens") as file:
+            self.__program_symbols = [line.strip() for line in file.readlines()]
+
+        self.__scan()
+
+    def __scan(self):
+
+        lexical_correct = True
+        for index, line in enumerate(self.__program_text):
+            if line == '\n':
+                continue
+            line = line.strip()
+
+            tokens = self.divide_in_tokens(line)
+            for token in tokens:
+                if token in self.__program_symbols:
+                    self.__pif.add(token, -1)
+
+                elif re.match(r'[a-zA-Z]+', token):
+                    index = self.__symbol_table.add(token)
+                    self.__pif.add(token, index)
+
+                elif re.match("^((\d|[1-9]\d*)|(\"[^\"]*\"))$", token):
+                    index = self.__symbol_table.add(token)
+                    self.__pif.add(token, index)
+                else:
+                    index_error = self.__program_text[index].find(token)
+                    error = f"Lexical Error! Line {index + 1} Col {index_error + 1}\n"
+                    lexical_correct = False
+        if lexical_correct:
+            self.write_to_file_st_pif("Lexically Correct")
+        else:
+            self.write_to_file_st_pif(error)
+
+    @staticmethod
+    def divide_in_tokens(program: str) -> list[str]:
+        tokens = []
+        current_pos = 0
+        simple_tokens = [",", ";", "(", ")", "[", "]", "{", "}", " ", "+", "-", "*", "/", "%", ">", "<", "="]
+        double_tokens = ["=", "<", ">"]
+
+        while current_pos < len(program):
+            lookahead = program[current_pos]
+
+            if lookahead.isspace():
+                current_pos += 1
+            elif lookahead in simple_tokens:
+                if lookahead in double_tokens:
+                    next_lookahead = program[current_pos + 1]
+                    if next_lookahead in double_tokens:
+                        current_pos += 2
+                        tokens.append(lookahead + next_lookahead)
+                else:
+                    current_pos += 1
+                    tokens.append(lookahead)
+
+
+            elif lookahead.isdigit():
+                text = ""
+                while current_pos < len(program) and program[current_pos].isdigit():
+                    text += program[current_pos]
+                    current_pos += 1
+                tokens.append(text)
+
+            elif lookahead.isalpha():
+                text = ""
+                while current_pos < len(program) and program[current_pos].isalpha():
+                    text += program[current_pos]
+                    current_pos += 1
+                tokens.append(text)
+            else:
+                raise ValueError(f"Unknown character '{lookahead}' at position {current_pos}")
+
+        return tokens
+
+    def write_to_file_st_pif(self, error):
+        with open("D:\Semester V\FLCD\FLCD_project_compiler\My_language\PIF.out", "w") as file:
+            file.write(str(self.__pif) + "\n\n" + error)
+        with open("D:\Semester V\FLCD\FLCD_project_compiler\My_language\ST.out", "w") as file:
+            file.write("Symbol Table:\n" + str(self.__symbol_table))

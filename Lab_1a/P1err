@@ -1,0 +1,13 @@
+
+int sum, numbers_[100], n;
+
+reaa(n)
+
+for(i = 0; i < n; i++){
+    read(numbers[i])
+}
+
+for(i = 0; i < n; i++){
+   sum = sum + numbers[i]
+}
+write(sum)
