@@ -11,12 +11,6 @@ class SymTable:
     def __len__(self):
         return self.__size
 
-    def __getitem__(self, item):
-        return self.__data[item]
-
-    def __str__(self):
-        return f"{'Position':<15} Value\n" + "\n".join([f"{str(entry[0]):15} {entry[1]}" for entry in self.get_as_list()])
-
     def hash(self, value):
         hash_value = 0
         for char in value:
@@ -40,8 +34,6 @@ class SymTable:
                 return [index, i]
             self.__data[index].append(elem)
             return [index, i]
-
-
 
     def find(self, elem):
         index = self.hash(elem)
@@ -84,3 +76,7 @@ class SymTable:
             for index_position, item in enumerate(item_list):
                 result.append([[index_hash, index_position], item])
         return result
+
+    def __str__(self):
+        return f"{'Position':<15} Value\n" + "\n".join(
+            [f"{str(entry[0]):15} {entry[1]}" for entry in self.get_as_list()])

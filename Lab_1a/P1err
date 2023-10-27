@@ -1,7 +1,7 @@
 
-int sum, numbers_[100], n;
+int sum, n23umbers[100], n;
 
-reaa(n)
+rea@(n)
 
 for(i = 0; i < n; i++){
     read(numbers[i])

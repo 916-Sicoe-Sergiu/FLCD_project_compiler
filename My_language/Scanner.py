@@ -39,10 +39,12 @@ class Scanner:
                 elif re.match("^((\d|[1-9]\d*)|(\"[^\"]*\"))$", token):
                     index = self.__symbol_table.add(token)
                     self.__pif.add(token, index)
+
                 else:
                     index_error = self.__program_text[index].find(token)
-                    error = f"Lexical Error! Line {index + 1} Col {index_error + 1}\n"
+                    error = f"Lexical Error! Line {index } Col {index_error }\n"
                     lexical_correct = False
+                    break
         if lexical_correct:
             self.write_to_file_st_pif("Lexically Correct")
         else:
@@ -51,9 +53,8 @@ class Scanner:
     @staticmethod
     def divide_in_tokens(program: str) -> list[str]:
         tokens = []
-        current_pos = 0
         simple_tokens = [",", ";", "(", ")", "[", "]", "{", "}", " ", "+", "-", "*", "/", "%", ">", "<", "="]
-        double_tokens = ["=", "<", ">"]
+        current_pos = 0
 
         while current_pos < len(program):
             lookahead = program[current_pos]
@@ -61,9 +62,9 @@ class Scanner:
             if lookahead.isspace():
                 current_pos += 1
             elif lookahead in simple_tokens:
-                if lookahead in double_tokens:
+                if lookahead in ["=", "<", ">"]:
                     next_lookahead = program[current_pos + 1]
-                    if next_lookahead in double_tokens:
+                    if next_lookahead in ["=", "<", ">"]:
                         current_pos += 2
                         tokens.append(lookahead + next_lookahead)
                 else:

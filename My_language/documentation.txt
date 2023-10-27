@@ -1,0 +1,28 @@
+The SymTable class represents a symbol table, which is a data structure used to store and manage a collection of unique elements. In this case, it's implemented as a hash table with separate chaining to handle collisions. The class contains methods for adding, finding, and removing elements, as well as for various other operations related to the symbol table.
+
+Class Constants
+SIZE: A constant that determines the initial capacity of the symbol table.
+NULL: A constant representing an invalid or non-existent value in the symbol table.
+Constructor
+The class constructor initializes an instance of the symbol table with the given capacity (SIZE). It also sets the size of the symbol table (__size) to 0 and creates an empty data structure to hold the elements.
+
+Public Methods
+hash(self, value): This method calculates a hash value for a given input value based on the ASCII values of its characters. The result is used to determine the index where the value should be stored in the symbol table.
+
+add(self, elem): The add method is used to insert an element into the symbol table. It calculates the hash of the element's value and then checks if the calculated index is already occupied. If the index is empty, the element is added. If not, it checks for duplicate values. If the element is not already in the symbol table, it is appended to the bucket at that index.
+
+find(self, elem): The find method is used to locate an element within the symbol table. It calculates the hash of the element's value, checks if the bucket at that index is empty, and then searches for the element within the bucket. If the element is found, its position is returned, otherwise, it returns NULL.
+
+remove(self, elem): The remove method allows for the removal of an element from the symbol table. It calculates the hash of the element's value, checks if the element exists in the bucket at that index, and, if so, removes it from the bucket. If the element is not found, it returns False. If it's removed successfully, it returns True.
+
+size(self): This method returns the current size of the symbol table.
+
+is_empty(self): This method checks whether the symbol table is empty and returns True if it is, False otherwise.
+
+get_all(self): Returns the entire data structure containing the elements of the symbol table, including empty buckets.
+
+get_as_list(self): Converts the symbol table into a list format, where each element is represented as a pair containing its position and value within the table.
+
+__str__(self): Provides a string representation of the symbol table, displaying the position and value of each element.
+
+In summary, the SymTable class offers a way to manage a collection of elements using a hash table with separate chaining to handle collisions. It provides methods for adding, finding, and removing elements, as well as other utility methods to inspect and manipulate the data.
