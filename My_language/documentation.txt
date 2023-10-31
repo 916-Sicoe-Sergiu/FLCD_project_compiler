@@ -26,3 +26,42 @@ get_as_list(self): Converts the symbol table into a list format, where each elem
 __str__(self): Provides a string representation of the symbol table, displaying the position and value of each element.
 
 In summary, the SymTable class offers a way to manage a collection of elements using a hash table with separate chaining to handle collisions. It provides methods for adding, finding, and removing elements, as well as other utility methods to inspect and manipulate the data.
+
+
+//////////////////// PIF structure
+
+    PifStructure is a class for managing a list of token-index pairs.
+
+    Attributes:
+        __data (list): A list to store token-index pairs.
+
+    Methods:
+        __init__(): Initializes an empty PifStructure.
+        __len__(): Returns the number of token-index pairs in the PifStructure.
+        __getitem__(item): Retrieves a token-index pair by index.
+        add(token, index): Adds a token-index pair to the PifStructure.
+        __str__(): Returns a formatted string representation of the PifStructure.
+
+/////////////////// Scan function
+
+Scans the program text and populates the PIF and symbol table.
+
+    This method iterates through the lines of the program text and tokenizes them. It classifies tokens into
+    program symbols, identifiers, and constants. For program symbols, it adds them to the PIF with a special
+    index value of -1. For identifiers and constants, it adds them to the symbol table and the PIF with their
+    corresponding indexes.
+
+    If a lexical error is encountered, it records the error message and sets 'lexical_correct' to False.
+
+    After scanning, it writes the results to a file, indicating whether the scanning process was successful.
+
+    Regular Expressions Explained:
+    - re.match(r'[a-zA-Z]+', token): Checks if 'token' consists of one or more alphabetical characters.
+      - [a-zA-Z] matches any single alphabetical character.
+      - + matches one or more of the preceding characters.
+
+    - re.match(r'\d+|[a-zA-Z]+', token): Checks if 'token' is either a sequence of one or more digits or a
+      sequence of one or more alphabetical characters.
+      - \d+ matches one or more digits.
+      - | is the logical OR operator, allowing either side of the expression to match.
+      - [a-zA-Z]+ matches one or more alphabetical characters.

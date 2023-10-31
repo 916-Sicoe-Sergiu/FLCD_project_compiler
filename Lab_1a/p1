@@ -1,5 +1,6 @@
 int a, b, c, max;
 
+a = "abc"
 read(a);
 read(b);
 read(c);

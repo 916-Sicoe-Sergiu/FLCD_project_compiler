@@ -25,9 +25,9 @@ class Scanner:
         for index, line in enumerate(self.__program_text):
             if line == '\n':
                 continue
-            line = line.strip()
+            new_line = line.strip()
 
-            tokens = self.divide_in_tokens(line)
+            tokens = self.divide_in_tokens(new_line)
             for token in tokens:
                 if token in self.__program_symbols:
                     self.__pif.add(token, -1)
@@ -36,7 +36,7 @@ class Scanner:
                     index = self.__symbol_table.add(token)
                     self.__pif.add(token, index)
 
-                elif re.match("^((\d|[1-9]\d*)|(\"[^\"]*\"))$", token):
+                elif re.match(r'\d+|[a-zA-Z]+', token):
                     index = self.__symbol_table.add(token)
                     self.__pif.add(token, index)
 
@@ -53,7 +53,7 @@ class Scanner:
     @staticmethod
     def divide_in_tokens(program: str) -> list[str]:
         tokens = []
-        simple_tokens = [",", ";", "(", ")", "[", "]", "{", "}", " ", "+", "-", "*", "/", "%", ">", "<", "="]
+        simple_tokens = [",", ";", "(", ")", "[", "]", "{", "}", " ", "+", "-", "*", "/", "%", ">", "<", "=", '"']
         current_pos = 0
 
         while current_pos < len(program):
@@ -67,6 +67,9 @@ class Scanner:
                     if next_lookahead in ["=", "<", ">"]:
                         current_pos += 2
                         tokens.append(lookahead + next_lookahead)
+                    else:
+                        current_pos += 1
+                        tokens.append(lookahead)
                 else:
                     current_pos += 1
                     tokens.append(lookahead)
