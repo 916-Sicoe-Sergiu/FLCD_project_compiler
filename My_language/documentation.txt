@@ -65,3 +65,21 @@ Scans the program text and populates the PIF and symbol table.
       - \d+ matches one or more digits.
       - | is the logical OR operator, allowing either side of the expression to match.
       - [a-zA-Z]+ matches one or more alphabetical characters.
+
+//////////////////// Scanner class
+    Scanner is a class responsible for lexical analysis of a program text, dividing it into tokens and managing the
+    Program Internal Form (PIF) and Symbol Table (ST).
+
+    Attributes:
+        __symbol_table (SymTable): An instance of the Symbol Table to store identifiers.
+        __pif (PifStructure): An instance of the Program Internal Form (PIF) to store token-index pairs.
+        __program_text (list[str]): A list containing the lines of the input program text.
+        __program_symbols (list[str]): A list of predefined program symbols.
+
+    Methods:
+        __init__(program_path: str): Initializes a Scanner object with the provided program path, setting up the
+        scanner for lexical analysis.
+        __scan(): Scans the program text, identifies tokens, and populates the PIF and symbol table.
+        divide_in_tokens(program: str) -> list[str]: Divides a given program string into a list of tokens based on
+        specific lexical rules.
+        write_to_file_st_pif(error: str): Writes the Symbol Table (ST) and Program Internal Form (PIF) to output files.
