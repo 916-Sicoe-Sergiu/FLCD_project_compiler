@@ -3,18 +3,18 @@ read(a);
 
 if (a < 2) {
     write("The number is not prime");
-    return(0);
+    exit(0);
 } elif (a == 2) {
     write("The number is prime");
-    return(0);
+    exit(0);
 } elif (a % 2 == 0) {
     write("The number is not prime");
-    return(0);
+    exit(0);
 } else {
     for (i = 3; i*i <= a; ++i) {
         if (a % i == 0){
            write("The number is not prime");
-            return(0);
+            exit(0);
         }
     }
     write("The number is prime");

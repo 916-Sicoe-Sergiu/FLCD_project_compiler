@@ -85,9 +85,16 @@ class Scanner:
                     current_pos += 1
                 tokens.append(text)
 
-            elif lookahead.isalpha() or lookahead == '"':
+            elif lookahead == '"':
                 text = ""
-                while current_pos < len(program) and (program[current_pos].isalpha() or program[current_pos] == '"'):
+                while current_pos < len(program) and (program[current_pos].isalpha() or program[current_pos] == '"' or program[current_pos] == ' '):
+                    text += program[current_pos]
+                    current_pos += 1
+                tokens.append(text)
+
+            elif lookahead.isalpha():
+                text = ""
+                while current_pos < len(program) and program[current_pos].isalpha():
                     text += program[current_pos]
                     current_pos += 1
                 tokens.append(text)

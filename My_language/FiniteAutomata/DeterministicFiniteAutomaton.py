@@ -8,7 +8,7 @@ class DFA:
         self.load_from_file()
 
     def load_from_file(self):
-        with open("/My_language/FA.in", 'r') as file:
+        with open("D:\Semester V\FLCD\FLCD_project_compiler\My_language\FiniteAutomata\FA.in", 'r') as file:
             for line in file:
                 line = line.strip()
                 if line.startswith('states'):
@@ -49,18 +49,18 @@ class DFA:
         return self.is_sequence_accepted(token) and 'q1' in self.final_states
 
     def is_integer_constant(self, token):
-        return self.is_sequence_accepted(token) and 'q2' in self.final_states
+        return self.is_sequence_accepted(token) and ('q2' in self.final_states or 'q3' in self.final_states)
 
-fa = DFA()
-fa.display_elements()
-
-identifiers = ["variable", "Invalid123", "_underscore"]
-integer_constants = ["123", "007", "Invalid123", "1a"]
-
-print("\nIdentifiers:")
-for identifier in identifiers:
-    print(f"{identifier}: {fa.is_identifier(identifier)}")
-
-print("\nInteger Constants:")
-for integer_constant in integer_constants:
-    print(f"{integer_constant}: {fa.is_integer_constant(integer_constant)}")
+# fa = DFA()
+# fa.display_elements()
+#
+# identifiers = ["0variable", "Invalid123", "_underscore"]
+# integer_constants = [ "123", "007", "Invalid123", "1a"]
+#
+# print("\nIdentifiers:")
+# for identifier in identifiers:
+#     print(f"{identifier}: {fa.is_identifier(identifier)}")
+#
+# print("\nInteger Constants:")
+# for integer_constant in integer_constants:
+#     print(f"{integer_constant}: {fa.is_integer_constant(integer_constant)}")
