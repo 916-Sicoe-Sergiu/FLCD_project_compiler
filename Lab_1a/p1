@@ -16,5 +16,3 @@ if(a > b){
     }else{
         write(c);
 }
-
-

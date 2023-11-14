@@ -1,3 +1,4 @@
+from My_language.FiniteAutomata.DeterministicFiniteAutomaton import DFA
 from My_language.PifStructure import PifStructure
 from My_language.SymTable import SymTable
 import re
@@ -8,6 +9,7 @@ class Scanner:
     def __init__(self, program_path: str):
         self.__symbol_table = SymTable()
         self.__pif = PifStructure()
+        self.__DFA = DFA()
 
         # program text
         with open(program_path) as file:
@@ -28,15 +30,16 @@ class Scanner:
             new_line = line.strip()
 
             tokens = self.divide_in_tokens(new_line)
+            a = 1
             for token in tokens:
                 if token in self.__program_symbols:
                     self.__pif.add(token, -1)
 
-                elif re.match(r'[a-zA-Z]+', token):
+                elif self.__DFA.is_identifier(token):
                     index = self.__symbol_table.add(token)
                     self.__pif.add(token, index)
 
-                elif re.match(r'\d+|[a-zA-Z]+', token):
+                elif re.match(r'"([^"]+)"', token) or self.__DFA.is_integer_constant(token):
                     index = self.__symbol_table.add(token)
                     self.__pif.add(token, index)
 
@@ -53,7 +56,7 @@ class Scanner:
     @staticmethod
     def divide_in_tokens(program: str) -> list[str]:
         tokens = []
-        simple_tokens = [",", ";", "(", ")", "[", "]", "{", "}", " ", "+", "-", "*", "/", "%", ">", "<", "=", '"']
+        simple_tokens = [",", ";", "(", ")", "[", "]", "{", "}", " ", "+", "-", "*", "/", "%", ">", "<", "="]
         current_pos = 0
 
         while current_pos < len(program):
@@ -82,9 +85,9 @@ class Scanner:
                     current_pos += 1
                 tokens.append(text)
 
-            elif lookahead.isalpha():
+            elif lookahead.isalpha() or lookahead == '"':
                 text = ""
-                while current_pos < len(program) and program[current_pos].isalpha():
+                while current_pos < len(program) and (program[current_pos].isalpha() or program[current_pos] == '"'):
                     text += program[current_pos]
                     current_pos += 1
                 tokens.append(text)

@@ -83,3 +83,5 @@ Scans the program text and populates the PIF and symbol table.
         divide_in_tokens(program: str) -> list[str]: Divides a given program string into a list of tokens based on
         specific lexical rules.
         write_to_file_st_pif(error: str): Writes the Symbol Table (ST) and Program Internal Form (PIF) to output files.
+
+
