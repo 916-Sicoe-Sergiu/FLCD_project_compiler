@@ -54,8 +54,8 @@ class DFA:
 # fa = DFA()
 # fa.display_elements()
 #
-# identifiers = ["0variable", "Invalid123", "_underscore"]
-# integer_constants = [ "123", "007", "Invalid123", "1a"]
+# identifiers = ["variable", "0variable", "Invalid123", "_underscore"]
+# integer_constants = [ "123", "07", "Invalid123", "1a"]
 #
 # print("\nIdentifiers:")
 # for identifier in identifiers:
