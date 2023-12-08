@@ -1,3 +1,5 @@
+from pprint import pprint
+
 from My_language.parser.grammar import Grammar
 
 
@@ -34,3 +36,8 @@ class Parser:
 
             if prev_first_sets == self.first_sets:
                 break
+
+
+parser = Parser()
+pprint(parser.first_sets)
+l=10

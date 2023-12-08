@@ -54,11 +54,11 @@ class Grammar:
                 all(symbol in self.terminals.union(self.non_terminals) for rule in self.productions for symbol in rule.right ))
 
 
-# grammar = Grammar()
-#
-# grammar.print_non_terminals()
-# grammar.print_terminals()
-# grammar.print_productions()
-# grammar.print_productions_for_non_terminal("program")
-#
-# print(grammar.cfg_check())
+grammar = Grammar()
+
+grammar.print_non_terminals()
+grammar.print_terminals()
+grammar.print_productions()
+grammar.print_productions_for_non_terminal("program")
+
+print(grammar.cfg_check())
