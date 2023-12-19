@@ -1,64 +1,56 @@
-class ProductionRule:
-    def __init__(self, left, right):
-        self.left = left
-        self.right = right
+import os
+from collections import defaultdict
 
 
 class Grammar:
     def __init__(self):
-        self.non_terminals = set()
-        self.terminals = set()
-        self.productions = []
+        with open("D:\\Semester V\\FLCD\\FLCD_project_compiler\\My_language\\parser\\test_g.txt") as file:
+        # with open("D:\Semester V\FLCD\FLCD_project_compiler\My_language\parser\grammar.txt") as file:
+            lines = [line.strip() for line in file.readlines()]
+        self.__start_symbol = lines[0].strip()
+        self.__non_terminals = lines[1].strip().split(" ")
+        self.__terminals = lines[2].strip().split(" ")
+        self.__productions = defaultdict(list)
+        for line in lines[3:]:
+            elements = line.split("->")
+            self.__productions[elements[0].strip()].append(elements[1].strip().split(" "))
 
-        self.load_from_file()
+    def get_start_symbol(self):
+        return self.__start_symbol
 
-    def load_from_file(self):
-        with open("D:\Semester V\FLCD\FLCD_project_compiler\My_language\parser\grammar.txt") as file:
+    def get_non_terminals(self):
+        return self.__non_terminals
 
-            self.non_terminals = set(next(file).strip().split())
-            self.terminals = set(next(file).strip().split())
+    def get_terminals(self):
+        return self.__terminals
 
-            for line in file:
-                line = line.strip()
-                if line:
-                    self.parse_production(line)
-
-    def parse_production(self, production_str):
-        left, right = production_str.split("->")
-        left = left.strip()
-        right = [symbol.strip() for symbol in right.split()]
-
-        self.productions.append(ProductionRule(left, right))
+    def get_productions(self):
+        return self.__productions
 
     def print_non_terminals(self):
-        print("Non-terminals:", *self.non_terminals)
+        print(*self.__non_terminals)
 
     def print_terminals(self):
-        print("Terminals:", *self.terminals)
+        print(*self.__terminals)
 
     def print_productions(self):
-        for production in self.productions:
-            print(f"{production.left} -> {' '.join(production.right)}")
+        for productions in self.__productions.items():
+            for production in productions[1]:
+                print(f"{productions[0]} -> {' '.join(production)}")
 
-    def print_productions_for_non_terminal(self, non_terminal):
-        matching_productions = [p for p in self.productions if p.left == non_terminal]
-        if matching_productions:
-            for production in matching_productions:
-                print(f"{production.left} -> {' '.join(production.right)}")
+    def print_productions_for_non_terminal(self, non_terminal: str):
+        if non_terminal in self.__non_terminals:
+            for production in self.__productions[non_terminal]:
+                print(f"{non_terminal} -> {' '.join(production)}")
         else:
             print(f"The non-terminal {non_terminal} does not exist!")
 
     def cfg_check(self):
-
-        return (set(rule.left for rule in self.productions) == self.non_terminals and
-                all(symbol in self.terminals.union(self.non_terminals) for rule in self.productions for symbol in rule.right ))
-
-
-grammar = Grammar()
-
-grammar.print_non_terminals()
-grammar.print_terminals()
-grammar.print_productions()
-grammar.print_productions_for_non_terminal("program")
-
-print(grammar.cfg_check())
+        if set(self.__productions.keys()) != set(self.__non_terminals):
+            return False
+        for values in self.__productions.values():
+            for items in values:
+                for item in items:
+                    if item not in self.__terminals and item not in self.__non_terminals:
+                        return False
+        return True

@@ -120,3 +120,235 @@ The `Parser` class is responsible for building the FIRST sets for each non-termi
 ## Methods
 
 - `build_first_sets(self)`: Builds the FIRST sets for each non-terminal in the grammar.
+# Parser Class Documentation
+
+The `Parser` class is designed to build and manage First and Follow sets for a given context-free grammar using the provided `Grammar` class.
+
+## Constructor
+
+### `__init__(self, grammar: Grammar)`
+
+- **Parameters:**
+  - `grammar` (Grammar): An instance of the Grammar class representing the context-free grammar.
+
+- **Description:**
+  - Initializes the Parser with the provided grammar.
+  - Builds First sets and computes Follow sets during initialization.
+
+## Public Methods
+
+### `print_first_sets()`
+
+- **Description:**
+  - Prints the First sets for each non-terminal in the grammar.
+
+### `print_follow_sets()`
+
+- **Description:**
+  - Prints the Follow sets for each non-terminal in the grammar.
+
+### `build_first_sets()`
+
+- **Description:**
+  - Builds the First sets for each non-terminal in the grammar.
+  - Uses the provided grammar's terminals and non-terminals.
+
+### `compute_follow_sets()`
+
+- **Description:**
+  - Computes the Follow sets for each non-terminal in the grammar.
+  - Uses the First sets previously built.
+  - Handles epsilon productions appropriately.
+
+## Example Usage
+
+```python
+from collections import defaultdict
+from grammar import Grammar
+
+# Create a Grammar instance (assumed to be implemented elsewhere)
+my_grammar = Grammar(...)
+
+# Create a Parser instance with the Grammar
+my_parser = Parser(my_grammar)
+
+# Print First sets
+my_parser.print_first_sets()
+
+# Print Follow sets
+my_parser.print_follow_sets()
+```
+
+# Parser Class Documentation
+
+The `Parser` class is designed to build and manage First and Follow sets for a given context-free grammar using the provided `Grammar` class.
+
+## Constructor
+
+### `__init__(self, grammar: Grammar)`
+
+- **Parameters:**
+  - `grammar` (Grammar): An instance of the Grammar class representing the context-free grammar.
+
+- **Description:**
+  - Initializes the Parser with the provided grammar.
+  - Builds First sets and computes Follow sets during initialization.
+
+## Public Methods
+
+### `print_first_sets()`
+
+- **Description:**
+  - Prints the First sets for each non-terminal in the grammar.
+
+### `print_follow_sets()`
+
+- **Description:**
+  - Prints the Follow sets for each non-terminal in the grammar.
+
+### `print_parsing_table()`
+
+- **Description:**
+  - Prints the parsing table generated from the First and Follow sets.
+
+### `print_parse_tree()`
+
+- **Description:**
+  - Prints the parse tree constructed during parsing.
+
+### `build_first_sets()`
+
+- **Description:**
+  - Builds the First sets for each non-terminal in the grammar.
+  - Iteratively processes production rules until no further updates are needed.
+
+### `compute_follow_sets()`
+
+- **Description:**
+  - Computes the Follow sets for each non-terminal in the grammar.
+  - Handles epsilon productions and updates Follow sets accordingly.
+  - Iteratively processes production rules until no further updates are needed.
+
+### `compute_parsing_table()`
+
+- **Description:**
+  - Computes the parsing table using the First and Follow sets.
+  - Populates the parsing table with production rules for non-terminals and terminals.
+
+### `parse(input_string: str) -> str`
+
+- **Parameters:**
+  - `input_string` (str): The input string to be parsed.
+
+- **Returns:**
+  - str: A message indicating whether parsing was successful or if an error occurred.
+
+- **Description:**
+  - Parses the given input string using the constructed parsing table.
+  - Implements a stack-based parsing approach with error handling.
+  - Returns a success message if parsing is successful; otherwise, returns an error message.
+
+### `error()`
+
+- **Description:**
+  - Static method that prints a generic error message related to parsing.
+
+## Example Usage
+
+```python
+from collections import defaultdict
+from My_language.parser.grammar import Grammar
+from My_language.parser.parser import Parser
+
+# Create a Grammar instance (assumed to be implemented elsewhere)
+my_grammar = Grammar(...)
+
+# Create a Parser instance with the Grammar
+my_parser = Parser(my_grammar)
+
+# Print First sets
+my_parser.print_first_sets()
+
+# Print Follow sets
+my_parser.print_follow_sets()
+
+# Print Parsing Table
+my_parser.print_parsing_table()
+
+# Print Parse Tree
+my_parser.print_parse_tree()
+
+# Example Parsing
+input_string = "..."
+result = my_parser.parse(input_string)
+print(result)
+```
+
+# ParseTree Class Documentation
+
+The `ParseTree` class represents a parse tree data structure used in the context of parsing. It allows for the construction of a parse tree during the parsing process.
+
+## Constructor
+
+### `__init__(self)`
+
+- **Description:**
+  - Initializes a `ParseTree` instance with an empty tree and an index counter set to 0.
+
+## Public Methods
+
+### `add(self, symbols: list, parent: int)`
+
+- **Parameters:**
+  - `symbols` (list): List of symbols to be added to the parse tree.
+  - `parent` (int): Index of the parent node in the parse tree.
+
+- **Description:**
+  - Adds a sequence of symbols to the parse tree.
+  - Each symbol is represented as a node with a parent index and a right sibling index.
+  - Handles the case when adding the first symbol to the tree.
+
+### `get_parent(self, top_symbol: tuple) -> int`
+
+- **Parameters:**
+  - `top_symbol` (tuple): A tuple representing the top symbol of a production rule.
+
+- **Returns:**
+  - int: The index of the parent node in the parse tree.
+
+- **Description:**
+  - Retrieves the parent index of a node in the parse tree based on the provided top symbol.
+  - Used during the parsing process to link nodes in the parse tree.
+
+### `clear(self)`
+
+- **Description:**
+  - Clears the parse tree by resetting the index counter and clearing the tree structure.
+
+### `__str__(self) -> str`
+
+- **Returns:**
+  - str: A formatted string representation of the parse tree.
+
+- **Description:**
+  - Provides a string representation of the parse tree, displaying the index, symbol, parent index, and right sibling index for each node in the tree.
+
+## Example Usage
+
+```python
+# Create a ParseTree instance
+my_parse_tree = ParseTree()
+
+# Add symbols to the parse tree
+my_parse_tree.add(['S', 'A', 'B'], 0)
+my_parse_tree.add(['a', 'b', 'c'], 1)
+
+# Get the parent index based on a top symbol
+parent_index = my_parse_tree.get_parent(('A', 0))
+
+# Clear the parse tree
+my_parse_tree.clear()
+
+# Display the parse tree
+print(my_parse_tree)
+```
