@@ -86,38 +86,6 @@ class Parser:
                 break
 
     def compute_parsing_table(self):
-        # for non_terminal, production_rules in self.__grammar.get_productions().items():
-        #     for production_rule in production_rules:
-        #         first_set = set()
-        #         for node in production_rule:
-        #             if self.__first_sets.get(node) is not None:
-        #                 if node is production_rule[0]:
-        #                     first_set.update(self.__first_sets.get(node))
-        #                 else:
-        #                     if 'epsilon' in self.__first_sets.get(node):
-        #                         first_set.update(self.__first_sets.get(node))
-        #             else:
-        #                 if node is production_rule[0]:
-        #                     first_set.update(node)
-        #
-        #         for terminal in first_set:
-        #             if terminal != 'epsilon':
-        #                 key = (non_terminal, terminal)
-        #                 if key not in self.__parsing_table:
-        #                     self.__parsing_table[key] = []
-        #
-        #                 self.__parsing_table[key].append(f"{non_terminal} -> {' '.join(map(str, production_rule))}")
-        #
-        #         if 'epsilon' in first_set:
-        #             follow_set = self.__follow_sets[non_terminal]
-        #             for terminal in follow_set:
-        #                 key = (non_terminal, terminal)
-        #                 if key not in self.__parsing_table:
-        #                     self.__parsing_table[key] = []
-        #
-        #                 self.__parsing_table[key].append('epsilon')
-
-# no conflicts table
         i = 0
         terminals = self.__grammar.get_terminals()
         for non_terminal, production_rules in self.__grammar.get_productions().items():

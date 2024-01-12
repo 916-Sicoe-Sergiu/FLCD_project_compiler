@@ -4,7 +4,7 @@ from collections import defaultdict
 
 class Grammar:
     def __init__(self):
-        with open("D:\\Semester V\\FLCD\\FLCD_project_compiler\\My_language\\parser\\test_g.txt") as file:
+        with open("D:\\Semester V\\FLCD\\FLCD_project_compiler\\My_language\\parser\\grammar.txt") as file:
         # with open("D:\Semester V\FLCD\FLCD_project_compiler\My_language\parser\grammar.txt") as file:
             lines = [line.strip() for line in file.readlines()]
         self.__start_symbol = lines[0].strip()

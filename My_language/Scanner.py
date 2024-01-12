@@ -30,18 +30,17 @@ class Scanner:
             new_line = line.strip()
 
             tokens = self.divide_in_tokens(new_line)
-            a = 1
             for token in tokens:
                 if token in self.__program_symbols:
                     self.__pif.add(token, -1)
 
                 elif self.__DFA.is_identifier(token):
                     index = self.__symbol_table.add(token)
-                    self.__pif.add(token, index)
+                    self.__pif.add("ID", index)
 
                 elif re.match(r'"([^"]+)"', token) or self.__DFA.is_integer_constant(token):
                     index = self.__symbol_table.add(token)
-                    self.__pif.add(token, index)
+                    self.__pif.add("CONST", index)
 
                 else:
                     index_error = self.__program_text[index].find(token)
@@ -108,3 +107,6 @@ class Scanner:
             file.write(str(self.__pif) + "\n\n" + error)
         with open("D:\Semester V\FLCD\FLCD_project_compiler\My_language\ST.out", "w") as file:
             file.write("Symbol Table:\n" + str(self.__symbol_table))
+
+    def get_pif(self):
+        return [item[0] for item in self.__pif]
