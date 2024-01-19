@@ -2,12 +2,10 @@
 #include <stdio.h>
 %}
 
-/* Definitions */
 digit           [0-9]
-nondigit        [a-zA-Z_]
+nondigit        [a-z]
 nonzerodigit    [1-9]
 
-/* Regular expressions for tokens */
 identifier      {nondigit}({nondigit}|{digit})*
 int_constant    [+-]?({nonzerodigit}{digit}*|{digit}+)
 string_constant \"([^\\"]|\\.)*\"
@@ -24,12 +22,11 @@ reserved        int|string|read|write|if|elif|else|for|exit|max
 {operator}      { printf("Operator: %s\n", yytext); return 0; }
 {separator}     { printf("Separator: %s\n", yytext); return 0; }
 
-[ \t\n]+        ; /* Ignore whitespaces */
+[ \t\n]+        ;
 .               { printf("Unknown character: %s\n", yytext); }
 
 %%
 
-/* Main function */
 int main(void)
 {
     yylex(); // Start the lexer

@@ -19,7 +19,6 @@ void yyerror(const char *s) {
 %token INT STRING READ WRITE IF ELIF ELSE FOR EXIT MAX
 
 %%
-/* Production rules */
 
 program
     : composed_stmt
